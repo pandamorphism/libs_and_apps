@@ -15,6 +15,14 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "bucketLib": [
+        "dist/bucket-lib"
+      ],
+      "bucketLib/*": [
+        "dist/bucket-lib/*"
+      ]
+    }
   }
 }

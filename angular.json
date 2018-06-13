@@ -50,7 +50,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "squirrelApp:build"
+            "browserTarget": "squirrelApp:build",
+            "port": 4210
           },
           "configurations": {
             "production": {
@@ -115,6 +116,166 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "bucketLib": {
+      "root": "projects/bucket-lib",
+      "sourceRoot": "projects/bucket-lib/src",
+      "projectType": "library",
+      "prefix": "bckt",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/bucket-lib/tsconfig.lib.json",
+            "project": "projects/bucket-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/bucket-lib/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/bucket-lib/src/test.ts",
+            "tsConfig": "projects/bucket-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/bucket-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/bucket-lib/tsconfig.lib.json",
+              "projects/bucket-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "hedgehogApp": {
+      "root": "projects/hedgehogApp/",
+      "sourceRoot": "projects/hedgehogApp/src",
+      "projectType": "application",
+      "prefix": "hdg",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/hedgehogApp",
+            "index": "projects/hedgehogApp/src/index.html",
+            "main": "projects/hedgehogApp/src/main.ts",
+            "polyfills": "projects/hedgehogApp/src/polyfills.ts",
+            "tsConfig": "projects/hedgehogApp/tsconfig.app.json",
+            "assets": [
+              "projects/hedgehogApp/src/favicon.ico",
+              "projects/hedgehogApp/src/assets"
+            ],
+            "styles": [
+              "projects/hedgehogApp/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/hedgehogApp/src/environments/environment.ts",
+                  "with": "projects/hedgehogApp/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "hedgehogApp:build",
+            "port": 4220
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "hedgehogApp:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "hedgehogApp:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/hedgehogApp/src/test.ts",
+            "polyfills": "projects/hedgehogApp/src/polyfills.ts",
+            "tsConfig": "projects/hedgehogApp/tsconfig.spec.json",
+            "karmaConfig": "projects/hedgehogApp/karma.conf.js",
+            "styles": [
+              "projects/hedgehogApp/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/hedgehogApp/src/favicon.ico",
+              "projects/hedgehogApp/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/hedgehogApp/tsconfig.app.json",
+              "projects/hedgehogApp/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "hedgehogApp-e2e": {
+      "root": "projects/hedgehogApp-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/hedgehogApp-e2e/protractor.conf.js",
+            "devServerTarget": "hedgehogApp:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "hedgehogApp:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/hedgehogApp-e2e/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
             ]
